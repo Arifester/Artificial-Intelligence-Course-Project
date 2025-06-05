@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Sentimen Teks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Anda bisa menambahkan custom CSS di sini atau di static/style.css jika diperlukan */
+       .result-card {
+            border: 1px solid #e2e8f0; /* gray-300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10 px-4">
+    <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Analisis Sentimen Teks Bahasa Indonesia</h1>
+
+        <form method="POST" class="space-y-6">
+            <div>
+                <label for="text_input" class="block text-sm font-medium text-gray-700 mb-1">Masukkan Teks:</label>
+                <textarea name="text_input" id="text_input" rows="5"
+                          class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
+                          placeholder="Contoh: Kurang cocok sih kalimat itu, karena kalau memang cocok bisa datang ke rumah">{{ text_input if text_input }}</textarea>
+            </div>
+            <div>
+                <button type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-md shadow-sm transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Analisis Sentimen
+                </button>
+            </div>
+        </form>
+
+        {% if prediction_crypter or prediction_aguf %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Hasil Analisis untuk Teks:</h2>
+            <p class="italic text-gray-600 bg-gray-50 p-4 rounded-md mb-6">"{{ text_input }}"</p>
+
+            {% if prediction_crypter %}
+            <div class="result-card">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-3">Model: crypter70/IndoBERT-Sentiment-Analysis</h3>
+                <p class="text-lg mb-1"><strong>Prediksi Sentimen:</strong>
+                    <span class="font-medium
+                        {% if prediction_crypter == 'POSITIVE' or prediction_crypter == 'Positif (Crypter)' %} text-green-600
+                        {% elif prediction_crypter == 'NEGATIVE' or prediction_crypter == 'Negatif (Crypter)' %} text-red-600
+                        {% else %} text-yellow-600 {% endif %}">
+                        {{ prediction_crypter }}
+                    </span>
+                </p>
+                {% if probabilities_crypter %}
+                <div class="text-sm text-gray-600">
+                    <strong class="block mb-1">Probabilitas:</strong>
+                    <ul class="list-disc list-inside ml-4">
+                        {% for label, prob in probabilities_crypter.items() %}
+                        <li>{{ label }}: {{ prob }}%</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if prediction_aguf %}
+            <div class="result-card">
+                <h3 class="text-xl font-semibold text-teal-700 mb-3">Model: agufsamudra/indo-sentiment-analysis</h3>
+                <p class="text-lg mb-1"><strong>Prediksi Sentimen:</strong>
+                    <span class="font-medium
+                        {% if prediction_aguf == 'Positif' %} text-green-600
+                        {% elif prediction_aguf == 'Negatif' %} text-red-600
+                        {% else %} text-gray-600 {% endif %}">
+                        {{ prediction_aguf }}
+                    </span>
+                </p>
+                {% if probabilities_aguf %}
+                <div class="text-sm text-gray-600">
+                    <strong class="block mb-1">Probabilitas:</strong>
+                    <ul class="list-disc list-inside ml-4">
+                        {% for label, prob in probabilities_aguf.items() %}
+                        <li>{{ label }}: {{ prob }}%</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
