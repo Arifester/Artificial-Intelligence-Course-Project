@@ -8,13 +8,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         /* Anda bisa menambahkan custom CSS di sini atau di static/style.css jika diperlukan */
-       .result-card {
+      .result-card {
             border: 1px solid #e2e8f0; /* gray-300 */
             border-radius: 0.5rem; /* rounded-lg */
             padding: 1.5rem; /* p-6 */
             margin-bottom: 1.5rem; /* mb-6 */
             background-color: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+       .credits-section {
+            border-top: 1px solid #e2e8f0; /* gray-300 */
+            padding-top: 1.5rem; /* pt-6 */
+            margin-top: 2.5rem; /* mt-10 */
+        }
+       .credits-section h4 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            color: #4a5568; /* gray-700 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+       .credits-section p,.credits-section li {
+            font-size: 0.875rem; /* text-sm */
+            color: #718096; /* gray-600 */
+            margin-bottom: 0.25rem; /* mb-1 */
+        }
+       .credits-section a {
+            color: #4299e1; /* blue-500 */
+            text-decoration: underline;
+        }
+       .credits-section a:hover {
+            color: #2b6cb0; /* blue-700 */
         }
     </style>
 </head>
@@ -27,7 +50,7 @@
                 <label for="text_input" class="block text-sm font-medium text-gray-700 mb-1">Masukkan Teks:</label>
                 <textarea name="text_input" id="text_input" rows="5"
                           class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-                          placeholder="Contoh: Kurang cocok sih kalimat itu, karena kalau memang cocok bisa datang ke rumah">{{ text_input if text_input }}</textarea>
+                          placeholder="Contoh: Pelayanannya sangat memuaskan dan produknya berkualitas tinggi!">{{ text_input if text_input }}</textarea>
             </div>
             <div>
                 <button type="submit"
@@ -91,6 +114,45 @@
             {% endif %}
         </div>
         {% endif %}
-    </div>
+
+        <div class="credits-section">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Kredit dan Referensi</h3>
+            <p class="text-sm text-gray-600 mb-4">
+                Pengembangan dan penyusunan aplikasi ini memanfaatkan sejumlah sumber daya terbuka yang sangat membantu dalam eksperimen serta analisis. Apresiasi dan pengakuan diberikan kepada:
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <h4>Model 1: crypter70/IndoBERT-Sentiment-Analysis</h4>
+                    <p>Sumber: <a href="https://huggingface.co/" target="_blank">Hugging Face</a></p>
+                    <p>Link Model: <a href="https://huggingface.co/crypter70/IndoBERT-Sentiment-Analysis" target="_blank">crypter70/IndoBERT-Sentiment-Analysis</a></p>
+                </div>
+
+                <div>
+                    <h4>Model 2: agufsamudra/indo-sentiment-analysis</h4>
+                    <p>Sumber: <a href="https://huggingface.co/" target="_blank">Hugging Face</a></p>
+                    <p>Link Model: <a href="https://huggingface.co/agufsamudra/indo-sentiment-analysis" target="_blank">agufsamudra/indo-sentiment-analysis</a></p>
+                </div>
+
+                <div>
+                    <h4>Dataset yang Digunakan (untuk evaluasi di notebook):</h4>
+                    <p>IndoNLU (SmSA Benchmark)</p>
+                    <p>Sumber: <a href="https://huggingface.co/datasets" target="_blank">Hugging Face Datasets</a></p>
+                    <p>Link Dataset: <a href="https://huggingface.co/datasets/indonlp/indonlu" target="_blank">indonlp/indonlu</a></p>
+                </div>
+
+                <div>
+                    <h4>Bantuan AI:</h4>
+                    <p>Proses perancangan, debugging, dan optimalisasi metodologi mendapat dukungan dari model AI generatif Gemini Pro (Google), yang berperan dalam membantu penyusunan struktur analisis serta eksplorasi lanjutan.</p>
+                </div>
+                 <div>
+                    <h4>Identitas Pengembang:</h4>
+                    <p>Nama: Arifudin</p>
+                    <p>NIM: 2304130061</p>
+                    <p>Mata Kuliah: Kecerdasan Buatan (Proyek Akhir)</p>
+                </div>
+            </div>
+        </div>
+        </div>
 </body>
 </html>
