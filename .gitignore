@@ -6,3 +6,10 @@ __pycache__/
 myenv/
 venv/
 .env
+
+# Flask Instance & Secrets
+instance/
+
+# Local Database
+*.db
+*.sqlite3
